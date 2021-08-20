@@ -1,0 +1,33 @@
+void szukanie_producenta_w_linijce(string linijka, vector <produkt> &produkty_tablica, int numer_produktu)
+{
+    cout<<"szukanie producenta w linijce"<<endl;
+
+    for(unsigned int nr_uniwersalnego = 0; nr_uniwersalnego < uniwersalny_tekst_kod_producenta_wczesniej.size()-1; nr_uniwersalnego++)//usunie tekst przed kazdym uniwersalnym tekstem w linijce
+    {
+        size_t pozycja_wyrazu_zaczynajacego = linijka.find(uniwersalny_tekst_kod_producenta_wczesniej[nr_uniwersalnego]);
+
+        if(pozycja_wyrazu_zaczynajacego != string::npos)
+        {
+            cout<<"usuwa"<<endl;
+            linijka.erase(0, pozycja_wyrazu_zaczynajacego);//usuwa wszystko przed wyrazem zaczynajacym
+        }
+    }
+
+
+    size_t pozycja_wyrazu_konczacego = linijka.find(wyraz_konczacy_producenta);
+    size_t pozycja_wyrazu_zaczynajacego = szukanie_ostatniego_tekstu(linijka.substr(0, pozycja_wyrazu_konczacego), wyraz_zaczynajacy_producenta);
+
+    if(pozycja_wyrazu_zaczynajacego != string::npos && pozycja_wyrazu_konczacego != string::npos)
+    {
+        pozycja_wyrazu_zaczynajacego += 1; //dlugosc ">"
+
+        cout<<"pozycja zaczynajacego: "<<pozycja_wyrazu_zaczynajacego<<endl;
+        cout<<"pozycja konczacego: "<<pozycja_wyrazu_zaczynajacego<<endl;
+
+        string nowy_producent = linijka.substr(pozycja_wyrazu_zaczynajacego, pozycja_wyrazu_konczacego-pozycja_wyrazu_zaczynajacego);
+        zamiana_odczytanego_na_polskie_znaki(nowy_producent);
+        produkty_tablica[numer_produktu].tablica_parametrow[3].wartosc = nowy_producent;
+        cout<<"PRODUCENT: "<<produkty_tablica[numer_produktu].tablica_parametrow[3].wartosc<<endl;
+    }
+
+}
